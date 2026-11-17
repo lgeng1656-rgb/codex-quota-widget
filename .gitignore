@@ -1,0 +1,7 @@
+dist/
+preview/
+tools/
+install-check/
+*.log
+*-check.txt
+check-error.txt
