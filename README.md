@@ -1,5 +1,7 @@
 # Codex Quota Widget 1.1.0
 
+[下载安装版 EXE](https://github.com/lgeng1656-rgb/codex-quota-widget/releases/download/v1.1.0/CodexQuotaWidget-Setup-1.1.0.exe) · [下载免安装 ZIP](https://github.com/lgeng1656-rgb/codex-quota-widget/releases/download/v1.1.0/CodexQuotaWidget-Windows.zip) · [查看发布说明](https://github.com/lgeng1656-rgb/codex-quota-widget/releases/latest)
+
 Windows 桌面额度卡片。提供安装版 EXE 和免安装 ZIP，无需 Node.js，也无需手动运行脚本。需要 Windows 10/11 和系统 .NET Framework 4.8。ARM Windows 暂未验证。
 
 ## 下载与使用
