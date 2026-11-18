@@ -17,8 +17,8 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using System.Reflection;
 [assembly: AssemblyTitle("Codex Quota Widget")]
-[assembly: AssemblyVersion("1.1.0.0")]
-[assembly: AssemblyFileVersion("1.1.0.0")]
+[assembly: AssemblyVersion("1.1.1.0")]
+[assembly: AssemblyFileVersion("1.1.1.0")]
 class Program {
  static Window window; static IntPtr hwnd; static bool busy,closed,failed;
  static ThemeManager theme;
@@ -35,7 +35,7 @@ class Program {
     if(!created&&!verify){MessageBox.Show("Codex 额度组件已经在运行，请查看桌面或任务栏。","Codex 额度");return 0;}
     var app=new Application();
     using(var stream=Assembly.GetExecutingAssembly().GetManifestResourceStream("Widget.xaml"))window=(Window)XamlReader.Load(stream);
-    window.Title="Codex 额度 · 1.1.0";
+    window.Title="Codex 额度 · 1.1.1";
     using(var icon=Assembly.GetExecutingAssembly().GetManifestResourceStream("App.ico"))window.Icon=System.Windows.Media.Imaging.BitmapFrame.Create(icon,System.Windows.Media.Imaging.BitmapCreateOptions.None,System.Windows.Media.Imaging.BitmapCacheOption.OnLoad);
     theme=new ThemeManager(window,light=>UI<TextBlock>("ThemeIcon").Text=light?"\uE708":"\uE706");
     var menu=new ContextMenu();var exit=new MenuItem{Header="退出组件"};exit.Click+=(s,e)=>window.Close();menu.Items.Add(exit);window.ContextMenu=menu;

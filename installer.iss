@@ -1,4 +1,4 @@
-#define AppVersion "1.1.0"
+#define AppVersion "1.1.1"
 [Setup]
 AppId={{64818918-5E8C-4B95-995B-F54B52CBEEAC}
 AppName=Codex Quota Widget

@@ -1,10 +1,10 @@
-# Codex Quota Widget 1.1.0
+# Codex Quota Widget 1.1.1
 
 Windows 桌面额度卡片。提供安装版 EXE 和免安装 ZIP，无需 Node.js，也无需手动运行脚本。需要 Windows 10/11 和系统 .NET Framework 4.8。ARM Windows 暂未验证。
 
 ## 下载与使用
 
-推荐下载 CodexQuotaWidget-Setup-1.1.0.exe，安装向导可选择开机自启和桌面快捷方式。安装完成后启动即可显示卡片。默认安装到当前用户目录，不需要管理员权限；卸载可从 Windows 已安装的应用中进行。
+推荐下载 CodexQuotaWidget-Setup-1.1.1.exe，安装向导可选择开机自启和桌面快捷方式。安装完成后启动即可显示卡片。默认安装到当前用户目录，不需要管理员权限；卸载可从 Windows 已安装的应用中进行。
 
 免安装：解压 CodexQuotaWidget-Windows.zip，双击 CodexQuotaWidget.exe。
 
@@ -15,10 +15,10 @@ Windows 桌面额度卡片。提供安装版 EXE 和免安装 ZIP，无需 Node.
 - 五小时与每周额度，剩余百分比、重置倒计时与完整日期时间。
 - 时间统一为北京时间 UTC+8。
 - 每分钟读取一次；失败后 15 秒重试，悬停底部提示查看原因。
-- 随 Windows 默认应用模式自动切换深色/浅色主题。
+- 默认跟随 Windows 主题，右上角可手动切换深色和浅色。
 - 非按钮区域可拖动；右上角刷新与置顶；右键菜单退出。
 - 桌面卡片不显示任务栏入口，常见 Dock 通常也不会列出该工具窗口。
-- 玻璃材质由本机壁纸文件柔焦生成，不采样其他软件窗口；动态壁纸仅呈现静态画面，壁纸不可用时使用主题底色。
+- 深浅两套哑光新拟态界面，浅色面板为纯白，两条额度条统一使用 #0285FF。
 
 ## 账号与隐私
 
@@ -34,6 +34,6 @@ Windows 桌面额度卡片。提供安装版 EXE 和免安装 ZIP，无需 Node.
 
 作用：编译原生 EXE 和免安装 ZIP；正常会生成 dist/CodexQuotaWidget.exe 和 dist/CodexQuotaWidget-Windows.zip。
 
-安装版使用 Inno Setup 6：在项目目录运行 ISCC.exe installer.iss，正常会生成 dist/CodexQuotaWidget-Setup-1.1.0.exe。
+安装版使用 Inno Setup 6：在项目目录运行 ISCC.exe installer.iss，正常会生成 dist/CodexQuotaWidget-Setup-1.1.1.exe。
 
 源码和发行文件均不需要配置 API Key。
