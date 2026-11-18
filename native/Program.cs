@@ -22,7 +22,6 @@ using System.Reflection;
 class Program {
  static Window window; static IntPtr hwnd; static bool busy,closed,failed;
  static ThemeManager theme;
- static DesktopMaterial material; static DateTime materialReload=DateTime.MinValue;
  static Process active; static DateTime next=DateTime.MinValue,updated;
  static Dictionary<string,object> five,week;
  static readonly JavaScriptSerializer json=new JavaScriptSerializer();
@@ -38,11 +37,11 @@ class Program {
     using(var stream=Assembly.GetExecutingAssembly().GetManifestResourceStream("Widget.xaml"))window=(Window)XamlReader.Load(stream);
     window.Title="Codex 额度 · 1.1.0";
     using(var icon=Assembly.GetExecutingAssembly().GetManifestResourceStream("App.ico"))window.Icon=System.Windows.Media.Imaging.BitmapFrame.Create(icon,System.Windows.Media.Imaging.BitmapCreateOptions.None,System.Windows.Media.Imaging.BitmapCacheOption.OnLoad);
-    material=new DesktopMaterial(UI<Border>("Backdrop"));
-    theme=new ThemeManager(window,light=>{material.Light=light;if(hwnd!=IntPtr.Zero)material.Update(hwnd);});
+    theme=new ThemeManager(window,light=>UI<TextBlock>("ThemeIcon").Text=light?"\uE708":"\uE706");
     var menu=new ContextMenu();var exit=new MenuItem{Header="退出组件"};exit.Click+=(s,e)=>window.Close();menu.Items.Add(exit);window.ContextMenu=menu;
-    UI<Button>("Pin").Click+=(s,e)=>{window.Topmost=!window.Topmost;UI<Button>("Pin").ToolTip=window.Topmost?"取消置顶":"置顶";UI<Button>("Pin").Opacity=window.Topmost?1:0.7;UI<Button>("Pin").Foreground=window.Topmost?(Brush)window.Resources["FiveAccent"]:(Brush)window.Resources["TextSecondary"];};
-    UI<Button>("Refresh").Click+=async(s,e)=>await Refresh();
+    UI<Button>("Pin").Click+=(s,e)=>{window.Topmost=!window.Topmost;UI<Button>("Pin").ToolTip=window.Topmost?"取消置顶":"置顶";UI<Button>("Pin").Opacity=window.Topmost?1:0.7;UI<Button>("Pin").SetResourceReference(Control.ForegroundProperty,window.Topmost?"FiveAccent":"TextSecondary");};
+    UI<Button>("ThemeToggle").Click+=(s,e)=>theme.Toggle();
+    UI<Button>("Refresh").Click+=async(s,e)=>{await Refresh();};
     window.SourceInitialized+=(s,e)=>{
      hwnd=new WindowInteropHelper(window).Handle;
      HwndSource.FromHwnd(hwnd).CompositionTarget.BackgroundColor=Colors.Transparent;
@@ -54,27 +53,35 @@ class Program {
      while(source!=null){if(source is ButtonBase)return;source=source is Visual?VisualTreeHelper.GetParent(source):LogicalTreeHelper.GetParent(source);}
      Glass.StartDrag(hwnd);e.Handled=true;
     };
-    // Clip the alpha content itself, including the blur/tint silhouette.
-    Action clip=()=>{if(window.ActualWidth>0){window.Clip=new RectangleGeometry(new Rect(0,0,window.ActualWidth,window.ActualHeight),25.6,25.6);Glass.Clip(hwnd,window.ActualWidth);}};
-    window.SizeChanged+=(s,e)=>{if(hwnd!=IntPtr.Zero)clip();};
-    window.LocationChanged+=(s,e)=>{if(hwnd!=IntPtr.Zero)material.Update(hwnd);};
     var timer=new DispatcherTimer {Interval=TimeSpan.FromSeconds(1)};
-    timer.Tick+=async(s,e)=>{theme.Refresh();if(DateTime.UtcNow>=materialReload){material.Reload();material.Update(hwnd);materialReload=DateTime.UtcNow.AddMinutes(1);}Render("Five",five);Render("Week",week);if(!busy&&DateTime.UtcNow>=next)await Refresh();};
+    timer.Tick+=async(s,e)=>{theme.Refresh();Render("Five",five);Render("Week",week);if(!busy&&DateTime.UtcNow>=next)await Refresh();};
     window.ContentRendered+=(s,e)=>{
-     clip();material.Update(hwnd);
      if(verify){
       if(window.ShowInTaskbar||!Glass.IsToolWindow(hwnd))throw new Exception("Taskbar/tool-window configuration failed");
-      if(window.Width!=312||Math.Abs(window.Height-338.4)>0.01||window.Icon==null)throw new Exception("Scale or icon failed");
-      if(!window.AllowsTransparency||!(window.Clip is RectangleGeometry)||!Glass.VerifySoftBoundary(hwnd))throw new Exception("Alpha silhouette or soft boundary failed");
-      foreach(string name in new[]{"FiveBar","WeekBar"}){var bar=UI<ProgressBar>(name);bar.Value=50;bar.ApplyTemplate();bar.UpdateLayout();var part=bar.Template.FindName("PART_Indicator",bar) as Border;if(part==null||part.CornerRadius.TopLeft!=4.5||Math.Abs(part.ActualWidth-bar.ActualWidth/2)>1)throw new Exception("Progress template failed");}
+      if(window.Width!=344||Math.Abs(window.Height-388.8)>0.01||window.Icon==null)throw new Exception("Scale or icon failed");
+      if(!window.AllowsTransparency||window.Clip!=null||!Glass.VerifySoftBoundary(hwnd))throw new Exception("Alpha silhouette or soft boundary failed");
+      foreach(string name in new[]{"FiveBar","WeekBar"}){var bar=UI<ProgressBar>(name);bar.Value=50;bar.ApplyTemplate();bar.UpdateLayout();var part=bar.Template.FindName("PART_Indicator",bar) as Border;if(part==null||part.Child!=null||!(part.Background is SolidColorBrush)||part.CornerRadius.TopLeft!=4||Math.Abs(part.ActualWidth-bar.ActualWidth/2)>1)throw new Exception("Progress template failed");}
       var button=UI<Button>("Refresh");button.ApplyTemplate();if(button.Template.FindName("ButtonSurface",button)==null)throw new Exception("Button template failed");
-      theme.Apply(false);window.UpdateLayout();
-      if(((SolidColorBrush)window.Foreground).Color!=Colors.White)throw new Exception("Dark palette failed");
-      theme.Apply(true);window.UpdateLayout();
-      if(((SolidColorBrush)window.Foreground).Color!=Color.FromRgb(32,44,64))throw new Exception("Day palette failed");
-      if(UI<Border>("Surface").Background!=window.Resources["SurfaceTint"])throw new Exception("Live theme resource update failed");
-      theme.Refresh();
-      File.WriteAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"layout-check.txt"),"LAYOUT_OK: 80 percent scale; embedded icon; wallpaper-only material; rounded alpha corners; rounded progress; custom buttons; live dark/day palettes; system theme read");window.Close();
+      UI<TextBlock>("FivePercent").Text="98% 剩余";UI<ProgressBar>("FiveBar").Value=98;UI<TextBlock>("FiveCountdown").Text="00小时 16分 34秒";UI<TextBlock>("FiveDate").Text="2026年11月18日 12:57 重置";
+      UI<TextBlock>("WeekPercent").Text="14% 剩余";UI<ProgressBar>("WeekBar").Value=14;UI<TextBlock>("WeekCountdown").Text="01小时 58分 41秒";UI<TextBlock>("WeekDate").Text="2026年11月18日 14:40 重置";UI<TextBlock>("Status").Text="更新于 12:40:54";window.UpdateLayout();
+      foreach(bool light in new[]{false,true}){
+       theme.Apply(light);
+       window.UpdateLayout();
+       var foreground = ((SolidColorBrush)window.Foreground).Color;
+       var surface = (SolidColorBrush)UI<Border>("Surface").Background;
+       if(foreground!=(light?Color.FromRgb(32,44,64):Color.FromRgb(244,246,252))
+          ||surface!=window.Resources["CardTint"]||surface.Color.A!=255
+          ||((System.Windows.Media.Effects.DropShadowEffect)window.Resources["SoftShadow"]).Opacity<=0)
+        throw new Exception("Matte theme resources failed");
+       var render=new System.Windows.Media.Imaging.RenderTargetBitmap(344,389,96,96,PixelFormats.Pbgra32);
+       render.Render(window);
+       var encoder=new System.Windows.Media.Imaging.PngBitmapEncoder();
+       encoder.Frames.Add(System.Windows.Media.Imaging.BitmapFrame.Create(render));
+       string image=Path.Combine(AppDomain.CurrentDomain.BaseDirectory,light?"light-render.png":"dark-render.png");
+       using(var imageFile=File.Create(image))encoder.Save(imageFile);
+      }
+      File.WriteAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"layout-check.txt"),"LAYOUT_OK: embedded icon; rounded alpha silhouette; flat rounded progress; custom buttons; live matte dark/light palettes");
+      window.Close();
      }else timer.Start();
     };
     window.Closed+=(s,e)=>{closed=true;timer.Stop();theme.Dispose();if(active!=null)try{if(!active.HasExited)active.Kill();}catch{}};

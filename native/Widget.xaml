@@ -1,67 +1,59 @@
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="Codex 额度" Width="312" Height="338.4" WindowStyle="None" ResizeMode="NoResize" AllowsTransparency="True" Background="Transparent" FontFamily="Microsoft YaHei UI" Foreground="{DynamicResource TextPrimary}" ShowInTaskbar="False">
- <Viewbox Stretch="Fill"><Grid Width="390" Height="423">
- <Border Name="Backdrop" CornerRadius="32" Background="{DynamicResource Fallback}"/>
- <Border CornerRadius="32" IsHitTestVisible="False"><Border.Background><LinearGradientBrush StartPoint="0,0" EndPoint="1,1"><GradientStop Color="#26FFFFFF" Offset="0"/><GradientStop Color="#04FFFFFF" Offset="0.3"/><GradientStop Color="#001C365B" Offset="0.6"/><GradientStop Color="#101C365B" Offset="1"/></LinearGradientBrush></Border.Background></Border>
+ <Grid>
+ <Border Margin="{DynamicResource WindowInset}" CornerRadius="25.6" Background="{DynamicResource SurfaceTint}" Effect="{DynamicResource OuterHighlight}" IsHitTestVisible="False"/>
+ <Border Margin="{DynamicResource WindowInset}" CornerRadius="25.6" Background="{DynamicResource SurfaceTint}" Effect="{DynamicResource OuterShadow}" IsHitTestVisible="False"/>
+ <Viewbox Margin="{DynamicResource WindowInset}" Stretch="Fill"><Grid Name="LayoutRoot" Width="390" Height="{DynamicResource FrameHeight}">
  <Border Name="Surface" CornerRadius="32" BorderBrush="{DynamicResource Stroke}" BorderThickness="0.6" Background="{DynamicResource SurfaceTint}" Padding="16,16,16,8.5">
  <Grid>
   <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
   <DockPanel Name="Header" Margin="10,0,6,12" LastChildFill="True">
    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
-    <Button Name="Refresh" ToolTip="刷新额度" AutomationProperties.Name="刷新额度" Margin="0,0,8,0"><TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE72C;" FontSize="18"/></Button><Button Name="Pin" ToolTip="置顶" AutomationProperties.Name="置顶"><TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE718;" FontSize="18"/></Button>
+    <Button Name="ThemeToggle" Tag="IconFocus" ToolTip="切换深浅主题" AutomationProperties.Name="切换深浅主题" Margin="0,0,8,0"><TextBlock Name="ThemeIcon" FontFamily="Segoe MDL2 Assets" Text="&#xE708;" FontSize="18"/></Button><Button Name="Refresh" ToolTip="刷新额度" AutomationProperties.Name="刷新额度" Margin="0,0,8,0"><TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE72C;" FontSize="18"/></Button><Button Name="Pin" Tag="IconFocus" ToolTip="置顶" AutomationProperties.Name="置顶"><TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE718;" FontSize="18"/></Button>
    </StackPanel>
-   <TextBlock VerticalAlignment="Center"><Run Text="Codex" FontSize="24" FontWeight="SemiBold"/><Run Text="  |  额度监控" FontSize="12" Foreground="{DynamicResource TextSecondary}"/></TextBlock>
+   <TextBlock VerticalAlignment="Center"><Run Text="Codex" FontSize="{DynamicResource BrandSize}" FontWeight="SemiBold"/><Run Text=" | 额度监控" FontSize="{DynamicResource HeaderSize}" Foreground="{DynamicResource TextSecondary}"/></TextBlock>
   </DockPanel>
   <StackPanel Grid.Row="1">
-   <Border Style="{DynamicResource QuotaCard}"><StackPanel>
-   <Grid><TextBlock Text="五小时额度" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center"/><TextBlock Name="FivePercent" Text="—" FontSize="24" FontWeight="SemiBold" HorizontalAlignment="Right"/></Grid>
-   <ProgressBar Name="FiveBar" Height="10" Margin="0,10,0,9" Foreground="{DynamicResource FiveAccent}" Background="{DynamicResource Track}" BorderThickness="0" Maximum="100"/>
-   <TextBlock Text="距离重置" FontSize="12" Foreground="{DynamicResource TextMuted}"/>
-   <TextBlock Name="FiveCountdown" Text="正在读取…" FontSize="21" FontWeight="SemiBold" Margin="0,2,0,3"/>
-   <TextBlock Name="FiveDate" Text="等待真实额度数据" FontSize="12" Foreground="{DynamicResource TextSecondary}"/>
-   </StackPanel></Border><Border Style="{DynamicResource QuotaCard}" Margin="0,10,0,0"><StackPanel>
-   <Grid><TextBlock Text="每周额度" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center"/><TextBlock Name="WeekPercent" Text="—" FontSize="24" FontWeight="SemiBold" HorizontalAlignment="Right"/></Grid>
-   <ProgressBar Name="WeekBar" Height="9" Margin="0,12,0,12" Foreground="{DynamicResource WeekAccent}" Background="{DynamicResource Track}" BorderThickness="0" Maximum="100"/>
-   <TextBlock Text="距离重置" FontSize="12" Foreground="{DynamicResource TextMuted}"/>
-   <TextBlock Name="WeekCountdown" Text="正在读取…" FontSize="21" FontWeight="SemiBold" Margin="0,2,0,3"/>
-   <TextBlock Name="WeekDate" Text="等待真实额度数据" FontSize="12" Foreground="{DynamicResource TextSecondary}"/>
-  </StackPanel></Border></StackPanel>
-  <StackPanel Grid.Row="2" Margin="0,0,0,12"><Border Height="0" Margin="0,10,0,0"/><Grid Margin="8,0"><Ellipse Width="7" Height="7" Fill="{DynamicResource StatusAccent}" HorizontalAlignment="Left" VerticalAlignment="Center"/><TextBlock Margin="14,0,0,0" Name="Status" Text="连接 Codex 中…" FontSize="12" Foreground="{DynamicResource StatusAccent}"/><TextBlock Text="北京时间 UTC+8" HorizontalAlignment="Right" FontSize="12" Foreground="{DynamicResource TextSecondary}"/></Grid></StackPanel>
+   <Grid><Border CornerRadius="26" Background="{DynamicResource CardTint}" Effect="{DynamicResource SoftHighlight}" IsHitTestVisible="False"/><Border CornerRadius="26" Background="{DynamicResource CardTint}" Effect="{DynamicResource SoftShadow}" IsHitTestVisible="False"/><Border Style="{DynamicResource QuotaCard}"><StackPanel>
+   <Grid><TextBlock Text="五小时额度" FontSize="{DynamicResource HeadingSize}" FontWeight="SemiBold" VerticalAlignment="Center"/><TextBlock Name="FivePercent" Text="—" FontSize="{DynamicResource PercentSize}" FontWeight="SemiBold" HorizontalAlignment="Right"/></Grid>
+   <ProgressBar Name="FiveBar" Height="8" Margin="0,10,0,9" Foreground="{DynamicResource ProgressFill}" Background="{DynamicResource ProgressTrack}" BorderThickness="0" Maximum="100"/>
+   <TextBlock Text="距离重置" FontSize="{DynamicResource SmallSize}" Foreground="{DynamicResource TextMuted}"/>
+   <TextBlock Name="FiveCountdown" Text="正在读取…" FontSize="{DynamicResource CountdownSize}" FontWeight="SemiBold" Margin="0,2,0,3"/>
+   <TextBlock Name="FiveDate" Text="等待真实额度数据" FontSize="{DynamicResource SmallSize}" Foreground="{DynamicResource TextSecondary}"/>
+   </StackPanel></Border></Grid><Grid Margin="0,18,0,0"><Border CornerRadius="26" Background="{DynamicResource CardTint}" Effect="{DynamicResource SoftHighlight}" IsHitTestVisible="False"/><Border CornerRadius="26" Background="{DynamicResource CardTint}" Effect="{DynamicResource SoftShadow}" IsHitTestVisible="False"/><Border Style="{DynamicResource QuotaCard}"><StackPanel>
+   <Grid><TextBlock Text="每周额度" FontSize="{DynamicResource HeadingSize}" FontWeight="SemiBold" VerticalAlignment="Center"/><TextBlock Name="WeekPercent" Text="—" FontSize="{DynamicResource PercentSize}" FontWeight="SemiBold" HorizontalAlignment="Right"/></Grid>
+   <ProgressBar Name="WeekBar" Height="8" Margin="0,10,0,9" Foreground="{DynamicResource ProgressFill}" Background="{DynamicResource ProgressTrack}" BorderThickness="0" Maximum="100"/>
+   <TextBlock Text="距离重置" FontSize="{DynamicResource SmallSize}" Foreground="{DynamicResource TextMuted}"/>
+   <TextBlock Name="WeekCountdown" Text="正在读取…" FontSize="{DynamicResource CountdownSize}" FontWeight="SemiBold" Margin="0,2,0,3"/>
+   <TextBlock Name="WeekDate" Text="等待真实额度数据" FontSize="{DynamicResource SmallSize}" Foreground="{DynamicResource TextSecondary}"/>
+  </StackPanel></Border></Grid></StackPanel>
+  <StackPanel Grid.Row="2" Margin="0,0,0,12"><Border Height="0" Margin="0,10,0,0"/><Grid Margin="8,0"><Ellipse Width="7" Height="7" Fill="{DynamicResource StatusAccent}" HorizontalAlignment="Left" VerticalAlignment="Center"/><TextBlock Margin="14,0,0,0" Name="Status" Text="连接 Codex 中…" FontSize="{DynamicResource SmallSize}" Foreground="{DynamicResource StatusAccent}"/><TextBlock Text="北京时间 UTC+8" HorizontalAlignment="Right" FontSize="{DynamicResource SmallSize}" Foreground="{DynamicResource TextSecondary}"/></Grid></StackPanel>
  </Grid>
  </Border>
- <Border CornerRadius="32" BorderThickness="0.65" IsHitTestVisible="False"><Border.BorderBrush><LinearGradientBrush StartPoint="0,0" EndPoint="1,1"><GradientStop Color="#BDFFFFFF" Offset="0"/><GradientStop Color="#20FFFFFF" Offset="0.32"/><GradientStop Color="#06FFFFFF" Offset="0.65"/><GradientStop Color="#65FFFFFF" Offset="1"/></LinearGradientBrush></Border.BorderBrush></Border>
- <Border Margin="1.5" CornerRadius="30.5" BorderThickness="0.4" BorderBrush="#19FFFFFF" IsHitTestVisible="False"/>
- <Border Margin="2" CornerRadius="30" IsHitTestVisible="False"><Border.Background><LinearGradientBrush StartPoint="0,0" EndPoint="0.8,1"><GradientStop Color="#14FFFFFF" Offset="0"/><GradientStop Color="#00FFFFFF" Offset="0.25"/><GradientStop Color="#00FFFFFF" Offset="0.58"/><GradientStop Color="#08FFFFFF" Offset="0.72"/><GradientStop Color="#00FFFFFF" Offset="0.9"/></LinearGradientBrush></Border.Background></Border>
- </Grid></Viewbox>
+ </Grid></Viewbox></Grid>
  <Window.Resources>
- <SolidColorBrush x:Key="CardTint" Color="#24FFFFFF"/>
- <Style x:Key="QuotaCard" TargetType="Border"><Setter Property="CornerRadius" Value="26"/><Setter Property="Padding" Value="16,12"/><Setter Property="Background" Value="{DynamicResource CardTint}"/><Setter Property="BorderBrush" Value="{DynamicResource Stroke}"/><Setter Property="BorderThickness" Value="0.5"/></Style>
-<SolidColorBrush x:Key="TextPrimary" Color="#FFFFFF"/>
-<SolidColorBrush x:Key="Fallback" Color="#4A566D"/>
-<SolidColorBrush x:Key="Stroke" Color="#70FFFFFF"/>
-<SolidColorBrush x:Key="SurfaceTint" Color="#CC46536C"/>
-<SolidColorBrush x:Key="TextSecondary" Color="#E4E9F3"/>
-<SolidColorBrush x:Key="Divider" Color="#40FFFFFF"/>
-<SolidColorBrush x:Key="FiveAccent" Color="#9AF5BE"/>
-<SolidColorBrush x:Key="Track" Color="#466C7B99"/>
-<SolidColorBrush x:Key="TextMuted" Color="#D1DAE9"/>
-<SolidColorBrush x:Key="WeekAccent" Color="#C3ADFF"/>
-<SolidColorBrush x:Key="StatusAccent" Color="#B5F5D0"/>
-<SolidColorBrush x:Key="Hover" Color="#20FFFFFF"/>
-<SolidColorBrush x:Key="Pressed" Color="#35FFFFFF"/>
+ <Style x:Key="QuotaCard" TargetType="Border"><Setter Property="Height" Value="{DynamicResource CardHeight}"/><Setter Property="CornerRadius" Value="26"/><Setter Property="Padding" Value="{DynamicResource CardPadding}"/><Setter Property="Background" Value="{DynamicResource CardTint}"/><Setter Property="BorderBrush" Value="{DynamicResource CardStroke}"/><Setter Property="BorderThickness" Value="{DynamicResource CardBorderThickness}"/></Style>
  <Style TargetType="ProgressBar">
   <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="ProgressBar">
    <Grid SnapsToDevicePixels="True">
-    <Border Background="{TemplateBinding Background}" BorderBrush="{DynamicResource Stroke}" BorderThickness="0.7" CornerRadius="4.5"/>
+    <Border Background="{TemplateBinding Background}" CornerRadius="4"/>
     <Grid x:Name="PART_Track">
-     <Border x:Name="PART_Indicator" HorizontalAlignment="Left" Background="{TemplateBinding Foreground}" CornerRadius="4.5"><Border CornerRadius="4.5"><Border.Background><LinearGradientBrush StartPoint="0,0" EndPoint="0,1"><GradientStop Color="#90FFFFFF" Offset="0"/><GradientStop Color="#00FFFFFF" Offset="0.55"/><GradientStop Color="#28000000" Offset="1"/></LinearGradientBrush></Border.Background></Border></Border>
+     <Border x:Name="PART_Indicator" HorizontalAlignment="Left" Background="{TemplateBinding Foreground}" CornerRadius="4"/>
     </Grid>
    </Grid>
   </ControlTemplate></Setter.Value></Setter>
- </Style><Style TargetType="Button"><Setter Property="Width" Value="32"/><Setter Property="Height" Value="32"/><Setter Property="Background" Value="{DynamicResource CardTint}"/><Setter Property="Foreground" Value="{DynamicResource TextSecondary}"/><Setter Property="BorderThickness" Value="0"/><Setter Property="Padding" Value="5,4"/><Setter Property="FontSize" Value="11"/><Setter Property="Cursor" Value="Hand"/><Setter Property="Template"><Setter.Value><ControlTemplate TargetType="Button">
- <Border x:Name="ButtonSurface" CornerRadius="16" BorderThickness="0.5" BorderBrush="{DynamicResource Stroke}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"><ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/></Border>
+ </Style><Style TargetType="Button"><Setter Property="Width" Value="32"/><Setter Property="Height" Value="32"/><Setter Property="Background" Value="{DynamicResource ButtonTint}"/><Setter Property="Foreground" Value="{DynamicResource TextSecondary}"/><Setter Property="BorderThickness" Value="0"/><Setter Property="Padding" Value="5,4"/><Setter Property="FontSize" Value="11"/><Setter Property="Cursor" Value="Hand"/><Setter Property="Template"><Setter.Value><ControlTemplate TargetType="Button">
+ <Grid><Border x:Name="ButtonHighlight" CornerRadius="16" Background="{TemplateBinding Background}" Effect="{DynamicResource SoftHighlight}" IsHitTestVisible="False"/><Border x:Name="ButtonShadow" CornerRadius="16" Background="{TemplateBinding Background}" Effect="{DynamicResource SoftShadow}" IsHitTestVisible="False"/><Border x:Name="ButtonSurface" CornerRadius="16" BorderThickness="0.7" BorderBrush="{DynamicResource ButtonStroke}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"><ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/></Border><Border x:Name="FocusRing" Margin="3" CornerRadius="13" BorderBrush="{DynamicResource FiveAccent}" BorderThickness="1" Visibility="Collapsed" IsHitTestVisible="False"/></Grid>
  <ControlTemplate.Triggers>
  <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="ButtonSurface" Property="Background" Value="{DynamicResource Hover}"/></Trigger>
- <Trigger Property="IsPressed" Value="True"><Setter TargetName="ButtonSurface" Property="Background" Value="{DynamicResource Pressed}"/></Trigger>
+ <Trigger Property="IsPressed" Value="True">
+  <Setter TargetName="ButtonHighlight" Property="Opacity" Value="0"/>
+  <Setter TargetName="ButtonShadow" Property="Opacity" Value="0"/>
+  <Setter TargetName="ButtonSurface" Property="Background" Value="{DynamicResource Track}"/>
+  <Setter TargetName="ButtonSurface" Property="BorderBrush" Value="{DynamicResource RecessEdge}"/>
+  <Setter TargetName="ButtonSurface" Property="BorderThickness" Value="1.3"/>
+ </Trigger>
+ <Trigger Property="IsKeyboardFocused" Value="True"><Setter TargetName="FocusRing" Property="Visibility" Value="Visible"/></Trigger>
+ <MultiTrigger><MultiTrigger.Conditions><Condition Property="IsKeyboardFocused" Value="True"/><Condition Property="Tag" Value="IconFocus"/></MultiTrigger.Conditions><Setter TargetName="FocusRing" Property="Visibility" Value="Collapsed"/><Setter Property="Foreground" Value="{DynamicResource FiveAccent}"/></MultiTrigger>
  <Trigger Property="IsEnabled" Value="False"><Setter Property="Opacity" Value="0.45"/></Trigger>
  </ControlTemplate.Triggers></ControlTemplate></Setter.Value></Setter>
  <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
