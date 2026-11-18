@@ -1,14 +1,12 @@
 # Codex Quota Widget
 
-[下载安装版 EXE](https://github.com/lgeng1656-rgb/codex-quota-widget/releases/download/v1.1.0/CodexQuotaWidget-Setup-1.1.0.exe) · [下载免安装 ZIP](https://github.com/lgeng1656-rgb/codex-quota-widget/releases/download/v1.1.0/CodexQuotaWidget-Windows.zip) · [查看发布说明](https://github.com/lgeng1656-rgb/codex-quota-widget/releases/latest)
+[下载安装版 EXE](https://github.com/lgeng1656-rgb/codex-quota-widget/releases/download/v1.1.1/CodexQuotaWidget-Setup-1.1.1.exe) · [下载免安装 ZIP](https://github.com/lgeng1656-rgb/codex-quota-widget/releases/download/v1.1.1/CodexQuotaWidget-Windows.zip) · [查看发布说明](https://github.com/lgeng1656-rgb/codex-quota-widget/releases/latest)
 
 Windows 桌面额度卡片。提供安装版 EXE 和免安装 ZIP，无需 Node.js，也无需手动运行脚本。需要 Windows 10/11 和系统 .NET Framework 4.8。ARM Windows 暂未验证。
 
 ## 下载与使用
 
-上方下载链接对应已发布的 v1.1.0。要试用双主题新拟态界面，请按本文的构建说明编译 main 分支。
-
-推荐下载 CodexQuotaWidget-Setup-1.1.0.exe，安装向导可选择开机自启和桌面快捷方式。安装完成后启动即可显示卡片。默认安装到当前用户目录，不需要管理员权限；卸载可从 Windows 已安装的应用中进行。
+推荐下载 CodexQuotaWidget-Setup-1.1.1.exe，安装向导可选择开机自启和桌面快捷方式。安装完成后启动即可显示卡片。默认安装到当前用户目录，不需要管理员权限；卸载可从 Windows 已安装的应用中进行。
 
 免安装：解压 CodexQuotaWidget-Windows.zip，双击 CodexQuotaWidget.exe。
 
@@ -38,6 +36,6 @@ Windows 桌面额度卡片。提供安装版 EXE 和免安装 ZIP，无需 Node.
 
 作用：编译原生 EXE 和免安装 ZIP；正常会生成 dist/CodexQuotaWidget.exe 和 dist/CodexQuotaWidget-Windows.zip。
 
-安装版使用 Inno Setup 6：在项目目录运行 ISCC.exe installer.iss，正常会生成 dist/CodexQuotaWidget-Setup-1.1.0.exe。
+安装版使用 Inno Setup 6：在项目目录运行 ISCC.exe installer.iss，正常会生成 dist/CodexQuotaWidget-Setup-1.1.1.exe。
 
 源码和发行文件均不需要配置 API Key。
